@@ -140,6 +140,9 @@ class GoogleAnalyticsPlugin(p.SingletonPlugin):
 
         if not converters.asbool(config.get('ckan.legacy_templates', 'false')):
             p.toolkit.add_resource('fanstatic_library', 'ckanext-googleanalytics')
+            
+        self.googleanalytics_is_klaro_mode = converters.asbool(
+            config.get('googleanalytics.klaro', False))
 
             # spawn a pool of 5 threads, and pass them queue instance
         for i in range(5):
@@ -247,7 +250,8 @@ class GoogleAnalyticsPlugin(p.SingletonPlugin):
             'googleanalytics_id': self.googleanalytics_id,
             'googleanalytics_domain': self.googleanalytics_domain,
             'googleanalytics_fields': str(self.googleanalytics_fields),
-            'googleanalytics_linked_domains': self.googleanalytics_linked_domains
+            'googleanalytics_linked_domains': self.googleanalytics_linked_domains,
+            'googleanalytics_is_klaro_mode': self.googleanalytics_is_klaro_mode
         }
         return p.toolkit.render_snippet(
             'googleanalytics/snippets/googleanalytics_header.html', data)
